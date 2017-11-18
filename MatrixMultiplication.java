@@ -1,4 +1,6 @@
 import java.util.Scanner;
+import java.util.Random;
+
 
 public class MatrixMultiplication{
 	public static int[][] matrix1,matrix2,result;
@@ -12,6 +14,8 @@ public class MatrixMultiplication{
 	}
 	
 	public static void main(String[] args) {
+		
+		Random rand = new Random();
 		Scanner input = new Scanner(System.in);
 		System.out.println("Enter the order of square matrix");
 		order = input.nextInt();
@@ -23,20 +27,20 @@ public class MatrixMultiplication{
 		System.out.println("Enter the entries of matrix1");
 		for(int i=0; i<order; ++i) 
 			for(int j=0; j<order; ++j) 
-				matrix1[i][j] = input.nextInt();
-			
-		
-
+				//matrix1[i][j] = input.nextInt();
+				matrix1[i][j] = rand.nextInt(50)+1;
 		System.out.println("Enter the entries of matrix2");
 		for(int i=0; i<order; ++i) 
 			for(int j=0; j<order; ++j) 
-				matrix2[i][j] = input.nextInt();
+				//matrix2[i][j] = input.nextInt();
+				matrix2[i][j] = rand.nextInt(50)+1;
 		/*Thread thread1 = new Thread(new Multiply(0,order));
 		Thread thread2 = new Thread(new Multiply(1,order));
 		Thread thread3 = new Thread(new Multiply(2,order));
 		thread1.start();
 		thread2.start();
 		thread3.start();*/
+		long startTime = System.nanoTime();
 		Thread threads[] = new Thread[order];
 		for(int i=0; i<order; ++i){
 			threads[i] = new Thread(new Multiply(i,order));
@@ -48,8 +52,12 @@ public class MatrixMultiplication{
 		printMatrix(matrix1, order);
 		System.out.println("Second matrix is");
 		printMatrix(matrix2, order);
-		System.out.println("The product is:")
+		System.out.println("The product is:");
 		printMatrix(result, order);
+		//timer.stop();
+		//System.out.println(timer.getElapsedTime());
+		long endTime = System.nanoTime();
+		System.out.println("Running time of the program is " + (endTime-startTime) + " nanoseconds");
 		/*Thread threads = new Thread[order];
 		for(int i=0; i<order; ++i)
 			threads[i] = new MatrixMultiplication(i);
@@ -73,3 +81,5 @@ class Multiply implements Runnable {
 		}
 	}
 }
+
+
