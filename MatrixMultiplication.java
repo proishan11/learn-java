@@ -31,11 +31,14 @@ public class MatrixMultiplication{
 				matrix2[i][j] = rand.nextInt(50)+1;
 		
 		Thread threads[] = new Thread[order];
-		for(int i=0; i<order; ++i){
+		for(int i=0; i<order; ++i)
 			threads[i] = new Thread(new Multiply(i,order));
-			threads[i].start();
-		}
+		
+		
 		long startTime2 = System.nanoTime();
+		for(int i=0; i<order; ++i)
+			threads[i].start();
+		
 		for(int i=0; i<order; ++i){
 			try{threads[i].join();}
 			catch(Exception e){
